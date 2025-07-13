@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Certificate Blockchain</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>University Blockchain Node</h1>
+
+    <form action="/transactions/new" method="POST">
+        <h2>Issue Certificate</h2>
+        <input name="sender" placeholder="University Name" required>
+        <input name="recipient" placeholder="Student Name" required>
+        <input name="certificate" placeholder="Certificate Details" required>
+        <button type="submit">Add Transaction</button>
+    </form>
+
+    <form action="/mine" method="POST">
+        <button type="submit">Mine Block</button>
+    </form>
+
+    <form action="/nodes/register" method="POST">
+        <input name="nodes" placeholder="http://localhost:5001,http://localhost:5002" required>
+        <button type="submit">Register Peers</button>
+    </form>
+
+    <form action="/nodes/resolve" method="POST">
+        <button type="submit">Resolve Conflicts</button>
+    </form>
+
+    <h2>Blockchain</h2>
+    {% for block in chain %}
+        <div class="block">
+            <p><b>Index:</b> {{ block.index }}</p>
+            <p><b>Timestamp:</b> {{ block.timestamp }}</p>
+            <p><b>Transactions:</b> {{ block.transactions }}</p>
+            <p><b>Proof:</b> {{ block.proof }}</p>
+            <p><b>Prev Hash:</b> {{ block.previous_hash }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
