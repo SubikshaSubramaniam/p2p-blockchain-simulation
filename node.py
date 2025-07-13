@@ -8,7 +8,7 @@ blockchain = Blockchain()
 
 @app.route('/')
 def index():
-    return render_template('index.html', chain=blockchain.chain)
+    return render_template('index.html', chain=blockchain.chain, peers=list(blockchain.nodes))
 
 @app.route('/mine', methods=['POST'])
 def mine():

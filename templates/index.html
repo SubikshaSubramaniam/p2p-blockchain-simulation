@@ -7,6 +7,7 @@
 <body>
     <h1>University Blockchain Node</h1>
 
+    <!-- Add Certificate Transaction -->
     <form action="/transactions/new" method="POST">
         <h2>Issue Certificate</h2>
         <input name="sender" placeholder="University Name" required>
@@ -15,28 +16,54 @@
         <button type="submit">Add Transaction</button>
     </form>
 
+    <!-- Mine Block -->
     <form action="/mine" method="POST">
         <button type="submit">Mine Block</button>
     </form>
 
+    <!-- Register Peers -->
     <form action="/nodes/register" method="POST">
         <input name="nodes" placeholder="http://localhost:5001,http://localhost:5002" required>
         <button type="submit">Register Peers</button>
     </form>
 
+    <!-- Resolve Conflicts -->
     <form action="/nodes/resolve" method="POST">
         <button type="submit">Resolve Conflicts</button>
     </form>
 
+    <!-- Connected Peers List -->
+    <h2>Connected Peers</h2>
+    <ul>
+        {% for peer in peers %}
+            <li>{{ peer }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Blockchain Table -->
     <h2>Blockchain</h2>
-    {% for block in chain %}
-        <div class="block">
-            <p><b>Index:</b> {{ block.index }}</p>
-            <p><b>Timestamp:</b> {{ block.timestamp }}</p>
-            <p><b>Transactions:</b> {{ block.transactions }}</p>
-            <p><b>Proof:</b> {{ block.proof }}</p>
-            <p><b>Prev Hash:</b> {{ block.previous_hash }}</p>
-        </div>
-    {% endfor %}
+    <table border="1" style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <th>Index</th>
+            <th>Timestamp</th>
+            <th>Transactions</th>
+            <th>Proof</th>
+            <th>Previous Hash</th>
+        </tr>
+        {% for block in chain %}
+        <tr>
+            <td>{{ block.index }}</td>
+            <td>{{ block.timestamp }}</td>
+            <td>
+                {% for txn in block.transactions %}
+                    <div><b>{{ txn.sender }}</b> ➡ <b>{{ txn.recipient }}</b><br>{{ txn.certificate }}</div><hr>
+                {% endfor %}
+            </td>
+            <td>{{ block.proof }}</td>
+            <td style="word-break: break-all;">{{ block.previous_hash }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
 </body>
 </html>
