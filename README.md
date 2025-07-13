@@ -13,3 +13,4 @@ A simulation of a university certificate issuance blockchain network.
 ```bash
 python node.py -p 5000
 python node.py -p 5001
+python node.py -p 5002
